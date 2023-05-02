@@ -15,7 +15,8 @@ app.get('/health', (req, res) => {
 app.get('/api/metadata', (req, res) => {
     res.send({
         version: pkg.version,
-        hostname: os.hostname()
+        hostname: os.hostname(),
+        arch: os.arch()
     });
 });
 

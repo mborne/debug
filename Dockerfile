@@ -6,7 +6,7 @@ RUN mkdir /opt/debug && chown -R node:node /opt/debug
 USER node
 WORKDIR /opt/debug
 COPY package.json .
-RUN npm install
+RUN npm install --omit=dev
 COPY server.js .
 COPY public public/
 
