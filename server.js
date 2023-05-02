@@ -1,24 +1,30 @@
 const express = require('express');
 
 const pkg = require('./package.json');
+const os = require("os");
 
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-    res.send(`Hello from debug:${pkg.version}` );
-});
+app.use(express.static('public'));
 
 app.get('/health', (req, res) => {
     res.send("OK");
 });
 
-app.get('/api/version', (req, res) => {
-    res.send(pkg.version);
+app.get('/api/metadata', (req, res) => {
+    res.send({
+        version: pkg.version,
+        hostname: os.hostname()
+    });
 });
 
 app.get('/api/headers', (req, res) => {
-    res.json(req.headers);
+    let headers = Object.assign({}, req.headers);
+    if ( headers.cookie ){
+        headers.cookie = 'HIDDEN';
+    }
+    res.json(headers);
 });
 
 app.listen(port, () => {

@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  debug:
+    image: ghcr.io/mborne/debug:v0.1.0
+    build: .
+    ports:
+    - 3000:3000
+    restart: unless-stopped
+
+networks:
+  default:
+    name: devbox
+    external: true
