@@ -1,14 +1,19 @@
-FROM node:18-alpine
+FROM node:18-alpine as builder
 
-RUN cat /etc/passwd
-RUN mkdir /opt/debug && chown -R node:node /opt/debug
-
-USER node
+RUN mkdir /opt/debug
 WORKDIR /opt/debug
 COPY package.json .
 RUN npm install --omit=dev
-COPY server.js .
+
+FROM node:18-alpine
+
+COPY --from=builder /opt/debug /opt/debug
+WORKDIR /opt/debug
+COPY package.json .
+COPY server.mjs .
+COPY config.cjs .
 COPY public public/
 
+USER node
 EXPOSE 3000
-CMD ["node","server.js"]
+CMD ["node", "server.mjs"]

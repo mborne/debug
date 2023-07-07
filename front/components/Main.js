@@ -3,7 +3,7 @@ import Headers from './Headers';
 
 export default function Main(){
     return (
-        <div>
+        <div className="container">
             <h1>debug is up!</h1>
 
             <Metadata />

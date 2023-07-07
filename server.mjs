@@ -1,7 +1,13 @@
-const express = require('express');
+import config from "./config.cjs";
+import process from 'process';
+import express from 'express';
+import os from 'os';
 
-const pkg = require('./package.json');
-const os = require("os");
+process.on('SIGTERM', () => {
+    console.log('shut down (SIGTERM received)');
+    process.exit(0);
+});
+
 
 const app = express();
 const port = 3000;
@@ -14,7 +20,7 @@ app.get('/health', (req, res) => {
 
 app.get('/api/metadata', (req, res) => {
     res.send({
-        version: pkg.version,
+        version: config.VERSION,
         hostname: os.hostname(),
         arch: os.arch()
     });
@@ -27,6 +33,7 @@ app.get('/api/headers', (req, res) => {
     }
     res.json(headers);
 });
+
 
 app.listen(port, () => {
     console.log(`debug listening on http://localhost:${port}`);
