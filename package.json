@@ -4,7 +4,6 @@
   "description": "Lightweight application to debug docker and K8S setup",
   "main": "index.js",
   "scripts": {
-    "start": "node server.mjs",
     "build": "webpack --mode=production",
     "build-dev": "webpack --mode=development",
     "watch": "webpack --mode=development --watch"
