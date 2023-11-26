@@ -1,8 +1,8 @@
-version: '3.7'
+version: '3'
 
 services:
   debug:
-    image: ghcr.io/mborne/debug:v0.1.0
+    image: ghcr.io/mborne/debug:master
     build: .
     ports:
     - 3000:3000

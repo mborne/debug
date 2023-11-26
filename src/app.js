@@ -1,0 +1,20 @@
+import express from 'express';
+
+const app = express();
+
+app.use(express.static('public'));
+
+import health from './controllers/health.js';
+app.get('/health', health);
+
+import metadata from './controllers/metadata.js';
+app.get('/api/metadata', metadata);
+
+import headers from './controllers/headers.js';
+app.get('/api/headers', headers);
+
+import crash from './controllers/bug/crash.js';
+app.post('/api/bug/crash', crash);
+
+
+export default app;
