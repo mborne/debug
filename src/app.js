@@ -16,5 +16,8 @@ app.get('/api/headers', headers);
 import crash from './controllers/bug/crash.js';
 app.post('/api/bug/crash', crash);
 
+import memoryLeak from './controllers/bug/memoryLeak.js';
+app.post('/api/bug/memory-leak', memoryLeak);
+
 
 export default app;
