@@ -4,6 +4,9 @@ const app = express();
 
 app.use(express.static('public'));
 
+import logRequest from './middlewares/logRequest.js';
+app.use(logRequest);
+
 import health from './controllers/health.js';
 app.get('/health', health);
 
