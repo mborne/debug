@@ -5,7 +5,9 @@ import logger from '../../logger.cjs';
  */
 export default function crash(req, res){
     logger.error("crash: Ooops! someone called crash :'(");
-    res.send("Oh no!");
+    res.send({
+        "status": "I'll be back!"
+    });
     process.exit(1);
 };
 

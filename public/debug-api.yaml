@@ -1,0 +1,162 @@
+openapi: 3.1.0
+info:
+  title: Debug API
+  description: |-
+    A buggy API to illustrate Docker and Kubernetes features.
+  license:
+    name: MIT
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.1.0
+#servers:
+#  - url: /
+externalDocs:
+  description: GitHub repository
+  url: https://github.com/mborne/debug#readme
+tags:
+  - name: helpers
+    description: Provide debug helpers
+  - name: bugs
+    description: Simulate bugs
+paths:
+  /api/health:
+    get:
+      tags:
+        - helpers
+      summary: Test if API is alive
+      description: Test if API is alive
+      operationId: health
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+  /api/metadata:
+    get:
+      tags:
+        - helpers
+      summary: Provides metadata about host or container
+      description: Provides metadata about host or container
+      operationId: metadata
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetadataResponse'
+
+  /api/headers:
+    get:
+      tags:
+        - helpers
+      summary: Show request headers
+      description: Allows to illustrate and debug headers added by a LoadBalancer.
+      operationId: headers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              type: object
+
+  /api/bug/crash:
+    post:
+      tags:
+        - bugs
+      summary: Simulate crash killing process
+      description: Allows to illustrate Docker or Kubernetes hability to restart process.
+      operationId: simulateCrash
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrashResponse'
+
+  /api/bug/memoryLeak:
+    post:
+      tags:
+        - bugs
+      summary: Simulate memory leak
+      description: Allows to illustrate Docker or Kubernetes hability to limit memory consuption.
+      operationId: simulateMemoryLeak
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryLeakResponse'
+
+  /api/bug/stress:
+    post:
+      tags:
+        - bugs
+      summary: Simulate CPU overload for 30 seconds
+      description: Allows to illustrate Docker or Kubernetes hability to limit CPU consuption.
+      operationId: simulateStress
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '500':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          examples: ["fail to run stress test (stress-ng missing?)"]
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          examples: ["OK","Oh no!"]
+    CrashResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          examples: ["I'll be back!"]
+    MemoryLeakResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          examples: ["Buffer added to memory"]
+        count:
+          type: number
+          examples: [1,2,3,20]
+    MetadataResponse:
+      type: object
+      properties:
+        # version: process.env.npm_package_version,
+        # hostname: hostname(),
+        # arch: arch(),
+        # color: color
+        version:
+          type: string
+          examples: ["v0.1.3"]
+        hostname:
+          type: string
+          examples: ["localhost"]
+        arch:
+          type: string
+          examples: ["amd64"]
+        color:
+          type: string
+          examples: [null,"blue","green"]

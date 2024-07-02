@@ -14,6 +14,7 @@ export default function memoryLeak(req, res){
         count: buffers.length
     });
     return res.json({
+        message: "Buffer added to memory",
         count: buffers.length
     });
 };
