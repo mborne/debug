@@ -1,13 +1,17 @@
 # mborne/debug
 
-A sample application to illustrate some Docker and Kubernetes features (auto-restarts, memory limits,...)
+A buggy API to illustrate Docker and Kubernetes features :
+
+![docs/screenshot.png](docs/screenshot.png)
 
 ## Parameters
 
-| Name          | Description                                                         | Default |
-| ------------- | ------------------------------------------------------------------- | ------- |
-| `DEBUG_PORT`  | Listening port                                                      | `3000`  |
-| `DEBUG_COLOR` | A color to illustrates env vars handling and blue/green deployments | `null`  |
+| Name          | Description                                                                                                                             | Default    |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| `DEBUG_PORT`  | Listening port                                                                                                                          | `3000`     |
+| `DEBUG_COLOR` | A color to illustrates env vars handling and blue/green deployments                                                                     | `null`     |
+| `LOG_FORMAT`  | Log format to illustrate JSON parsing ("simple" or "json")                                                                              | `"simple"` |
+| `LOG_LEVEL`   | [Log level](https://github.com/winstonjs/winston?tab=readme-ov-file#using-logging-levels) ("debug", "verbose", "info", "warn", "error") | `"info"`   |
 
 ## Usage
 
@@ -21,10 +25,12 @@ docker compose up -d --build
 ### Local usage
 
 ```bash
+# install stress-ng
+sudo apt-get update
+sudo apt-get install -y stress-ng
+
 # install dependencies
 npm install
-# build front
-npm run build
 # start on http://localhost:3000
 npm run start
 ```

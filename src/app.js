@@ -4,8 +4,14 @@ const app = express();
 
 app.use(express.static('public'));
 
+import logRequest from './middlewares/logRequest.js';
+app.use(logRequest);
+
+import specs from './controllers/specs.js';
+app.get('/debug-api.yaml', specs);
+
 import health from './controllers/health.js';
-app.get('/health', health);
+app.get('/api/health', health);
 
 import metadata from './controllers/metadata.js';
 app.get('/api/metadata', metadata);
@@ -19,5 +25,7 @@ app.post('/api/bug/crash', crash);
 import memoryLeak from './controllers/bug/memoryLeak.js';
 app.post('/api/bug/memory-leak', memoryLeak);
 
+import stress from './controllers/bug/stress.js';
+app.post('/api/bug/stress', stress);
 
 export default app;

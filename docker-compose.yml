@@ -1,19 +1,15 @@
-version: '3'
-
 services:
   debug:
     image: ghcr.io/mborne/debug:master
     build: .
     ports:
-    - 3000:3000
+    - ${DEBUG_PORT:-3000}:3000
     deploy:
       resources:
         limits:
-          cpus: '1.0'
-          memory: 512M
+          cpus: '0.5'
+          memory: 128M
         reservations:
-          cpus: '0.0001'
-          memory: 20M
+          cpus: '0.1'
+          memory: 128M
     restart: unless-stopped
-
-

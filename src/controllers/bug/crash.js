@@ -1,10 +1,13 @@
+import logger from '../../logger.cjs';
+
 /**
  * Allows to crash the process
  */
 export default function crash(req, res){
-    // TODO logger
-    console.error("Ooops! someone called crash :'(");
-    res.send("Oh no!");
+    logger.error("crash: Ooops! someone called crash :'(");
+    res.send({
+        "status": "I'll be back!"
+    });
     process.exit(1);
 };
 
