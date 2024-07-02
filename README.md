@@ -17,9 +17,24 @@ A buggy API to illustrate Docker and Kubernetes features :
 
 ### Usage with docker
 
+See [docker-compose.yml](docker-compose.yml) :
+
 ```bash
 # start on http://localhost:3000
 docker compose up -d --build
+
+# simulate crash 
+curl -X POST http://localhost:3000/api/bug/crash
+
+# simulate memory leak
+while true; do curl -X POST -sS http://localhost:3000/api/bug/memory-leak ; echo; sleep 1; done
+```
+
+### Kubernetes usage
+
+```bash
+kubectl -k manifests
+# work in progress (trying to avoid Ingress)...
 ```
 
 ### Local usage
@@ -33,20 +48,6 @@ sudo apt-get install -y stress-ng
 npm install
 # start on http://localhost:3000
 npm run start
-```
-
-## Advanced usage
-
-### /api/bug/crash - Force API crash to test auto-restart
-
-```bash
-curl -X POST http://localhost:3000/api/bug/crash
-```
-
-### /api/bug/memory-leak - Simulate memory leak
-
-```bash
-while true; do curl -X POST -sS http://localhost:3000/api/bug/memory-leak ; echo; sleep 1; done
 ```
 
 ## License

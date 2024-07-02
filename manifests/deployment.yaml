@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: debug
+  name: debug
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: debug
+  template:
+    metadata:
+      labels:
+        app: debug
+    spec:
+      containers:
+      - name: debug
+        image: ghcr.io/mborne/debug:master
+        ports:
+          - name: http
+            containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+          failureThreshold: 5
+          periodSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+          initialDelaySeconds: 5
+          failureThreshold: 1
+          periodSeconds: 1
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          runAsUser: 1000
+          runAsNonRoot: true
+          capabilities:
+            drop:
+              - ALL
+          seccompProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: 200m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 128Mi
+

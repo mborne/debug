@@ -7,9 +7,6 @@ app.use(express.static('public'));
 import logRequest from './middlewares/logRequest.js';
 app.use(logRequest);
 
-import specs from './controllers/specs.js';
-app.get('/debug-api.yaml', specs);
-
 import health from './controllers/health.js';
 app.get('/api/health', health);
 
