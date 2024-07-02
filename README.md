@@ -32,9 +32,32 @@ while true; do curl -X POST -sS http://localhost:3000/api/bug/memory-leak ; echo
 
 ### Kubernetes usage
 
+In one terminal :
+
 ```bash
+# deploy
 kubectl -k manifests
-# work in progress (trying to avoid Ingress)...
+# To watch pods restarts :
+watch kubectl get pods -o wide
+# To watch pods CPU / RAM :
+watch kubectl top pods
+```
+
+In another terminal :
+
+```bash
+# create temp pod
+kubectl run terminal  --rm -it  --image=ghcr.io/mborne/terminal:latest --restart=Never -- /bin/sh
+
+# get metadata
+curl -sS http://debug/api/metadata | jq
+
+# crash random pod
+curl -X POST -sS http://debug/api/bug/crash | jq
+# simulate CPU overload
+curl -X POST -sS http://debug/api/bug/stress | jq
+# simulate memory leak
+while true; do curl -X POST -sS http://debug/api/bug/memory-leak | jq ; sleep 5; done
 ```
 
 ### Local usage
