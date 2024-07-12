@@ -1,15 +1,19 @@
 services:
   debug:
     image: ghcr.io/mborne/debug:master
-    build: .
+    build:
+      context: .
+      args:
+      - http_proxy
+      - https_proxy
     ports:
     - ${DEBUG_PORT:-3000}:3000
     deploy:
       resources:
         limits:
           cpus: '0.5'
-          memory: 128M
+          memory: 256M
         reservations:
           cpus: '0.1'
-          memory: 128M
+          memory: 256M
     restart: unless-stopped

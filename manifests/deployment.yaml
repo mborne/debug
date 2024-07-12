@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: debug
-        image: ghcr.io/mborne/debug:v0.1.1
+        image: ghcr.io/mborne/debug:v0.2.0
         ports:
           - name: http
             containerPort: 3000
@@ -37,7 +37,6 @@ spec:
         - name: DEBUG_PORT
           value: '3000'
         - name: LOG_FORMAT
-          value:'json'
         securityContext:
           allowPrivilegeEscalation: false
           privileged: false
@@ -51,8 +50,8 @@ spec:
         resources:
           requests:
             cpu: 200m
-            memory: 128Mi
+            memory: 256Mi
           limits:
             cpu: 500m
-            memory: 128Mi
+            memory: 256Mi
 

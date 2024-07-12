@@ -6,7 +6,7 @@ info:
   license:
     name: MIT
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 0.1.1
+  version: 0.2.0
 #servers:
 #  - url: /
 externalDocs:
@@ -17,6 +17,8 @@ tags:
     description: Provide debug helpers
   - name: bugs
     description: Simulate bugs
+  - name: stress
+    description: Run stress test
 paths:
   /api/health:
     get:
@@ -91,13 +93,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/MemoryLeakResponse'
 
-  /api/bug/stress:
+  /api/stress/cpu:
     post:
       tags:
-        - bugs
+        - stress
       summary: Simulate CPU overload for 30 seconds
       description: Allows to illustrate Docker or Kubernetes hability to limit CPU consuption.
-      operationId: simulateStress
+      operationId: stressCpu
       responses:
         '200':
           description: successful operation
@@ -112,6 +114,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /api/stress/memory:
+    post:
+      tags:
+        - stress
+      summary: Simulate memory intensive tasks for 30 seconds
+      description: Allows to illustrate Docker or Kubernetes hability to limit CPU consuption.
+      operationId: stressMemory
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '500':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
 components:
   schemas:
     ErrorResponse:
@@ -119,7 +143,7 @@ components:
       properties:
         message:
           type: string
-          examples: ["fail to run stress test (stress-ng missing?)"]
+          examples: ["fail to run cpu stress test (stress-ng missing?)"]
     SuccessResponse:
       type: object
       properties:

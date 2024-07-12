@@ -54,8 +54,6 @@ curl -sS http://debug/api/metadata | jq
 
 # crash random pod
 curl -X POST -sS http://debug/api/bug/crash | jq
-# simulate CPU overload
-curl -X POST -sS http://debug/api/bug/stress | jq
 # simulate memory leak
 while true; do curl -X POST -sS http://debug/api/bug/memory-leak | jq ; sleep 5; done
 ```
