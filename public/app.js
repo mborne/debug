@@ -1,22 +1,41 @@
 (function () {
   const base = window.location.origin;
-  const META_INTERVAL_MS = 2500;
+  const META_INTERVAL_MS = 1000;
 
   const metaHostname = document.getElementById('meta-hostname');
   const metaVersion = document.getElementById('meta-version');
   const metaArch = document.getElementById('meta-arch');
   const metaColor = document.getElementById('meta-color');
-  const metaUpdated = document.getElementById('meta-updated');
-  const statusDot = document.getElementById('status-dot');
-  const statusText = document.getElementById('status-text');
+  const metaAge = document.getElementById('meta-age');
+  const metaMemory = document.getElementById('meta-memory');
+  const metaLeakCount = document.getElementById('meta-leak-count');
+  const metaStatus = document.getElementById('meta-status');
   const actionFeedback = document.getElementById('action-feedback');
 
-  function formatTime() {
-    return new Date().toLocaleTimeString('en-GB', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-    });
+  /** Format seconds as readable age: 5s, 5m08s, 2h30m, 3d02h */
+  function formatAge(isoStartedAt) {
+    if (!isoStartedAt) return '—';
+    const sec = Math.floor((Date.now() - new Date(isoStartedAt).getTime()) / 1000);
+    if (sec < 0) return '0s';
+    if (sec < 60) return sec + 's';
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    if (m < 60) return s > 0 ? m + 'm' + String(s).padStart(2, '0') + 's' : m + 'm';
+    const h = Math.floor(m / 60);
+    const min = m % 60;
+    if (h < 24) return (min > 0 ? h + 'h' + String(min).padStart(2, '0') + 'm' : h + 'h');
+    const d = Math.floor(h / 24);
+    const hr = h % 24;
+    return (hr > 0 ? d + 'd' + String(hr).padStart(2, '0') + 'h' : d + 'd');
+  }
+
+  /** Format bytes as readable size: 125 MB, 1.2 GB */
+  function formatBytes(bytes) {
+    if (bytes == null || isNaN(bytes)) return '—';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    return (bytes / (1024 * 1024 * 1024)).toFixed(1) + ' GB';
   }
 
   function setMeta(data) {
@@ -32,37 +51,40 @@
       metaColor.style.backgroundColor = '';
       metaColor.style.border = '';
     }
-    metaUpdated.textContent = 'Last updated: ' + formatTime();
+    metaAge.textContent = formatAge(data.started_at);
+    metaMemory.textContent = data.memory && data.memory.heapUsed != null ? formatBytes(data.memory.heapUsed) : '—';
+    metaLeakCount.textContent = data.leaked_buffers_count != null ? String(data.leaked_buffers_count) : '—';
   }
 
-  function fetchMetadata() {
-    fetch(base + '/api/metadata')
-      .then(function (res) {
-        return res.ok ? res.json() : Promise.reject(new Error('Metadata unavailable'));
-      })
-      .then(setMeta)
-      .catch(function () {
-        metaHostname.textContent = '—';
-        metaVersion.textContent = '—';
-        metaArch.textContent = '—';
-        metaColor.textContent = '—';
-        metaUpdated.textContent = 'Last updated: error';
-      });
+  function fetchProcess() {
+    Promise.all([
+      fetch(base + '/api/metadata').then(function (res) { return res.ok ? res.json() : {}; }),
+      fetch(base + '/api/stats').then(function (res) { return res.ok ? res.json() : {}; })
+    ]).then(function ([meta, stats]) {
+      setMeta(Object.assign({}, meta, stats));
+    }).catch(function () {
+      metaHostname.textContent = '—';
+      metaVersion.textContent = '—';
+      metaArch.textContent = '—';
+      metaColor.textContent = '—';
+      metaAge.textContent = '—';
+      metaMemory.textContent = '—';
+      metaLeakCount.textContent = '—';
+    });
   }
 
-  function setStatus(ok, text) {
-    statusDot.className = 'tag is-rounded mr-2 ' + (ok ? 'is-success' : 'is-danger');
-    statusDot.textContent = '\u25CF';
-    statusText.textContent = text;
+  function setStatus(ok) {
+    metaStatus.textContent = ok ? 'UP' : 'DOWN';
+    metaStatus.className = 'is-size-6 has-text-weight-semibold ' + (ok ? 'has-text-success' : 'has-text-danger');
   }
 
   function checkHealth() {
     fetch(base + '/api/health')
       .then(function (res) {
-        setStatus(res.ok, res.ok ? 'API available' : 'API unavailable');
+        setStatus(res.ok);
       })
       .catch(function () {
-        setStatus(false, 'Offline');
+        setStatus(false);
       });
   }
 
@@ -115,7 +137,7 @@
   document.body.addEventListener('click', handleAction);
 
   checkHealth();
-  fetchMetadata();
-  setInterval(fetchMetadata, META_INTERVAL_MS);
+  fetchProcess();
+  setInterval(fetchProcess, META_INTERVAL_MS);
   setInterval(checkHealth, 10000);
 })();

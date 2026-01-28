@@ -1,6 +1,5 @@
 import logger from '../../logger.cjs';
-
-const buffers = [];
+import { buffers } from '../../memoryLeakData.js';
 
 const BUFFER_SIZE = 1000*1024;
 

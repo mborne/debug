@@ -13,6 +13,9 @@ app.get('/api/health', health);
 import metadata from './controllers/metadata.js';
 app.get('/api/metadata', metadata);
 
+import stats from './controllers/stats.js';
+app.get('/api/stats', stats);
+
 import headers from './controllers/headers.js';
 app.get('/api/headers', headers);
 

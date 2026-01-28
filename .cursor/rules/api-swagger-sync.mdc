@@ -1,0 +1,23 @@
+---
+description: Keep Swagger/OpenAPI doc in sync when the API changes
+globs: src/app.js,src/controllers/**/*.js,public/docs/debug-api.yaml
+alwaysApply: false
+---
+
+# API ↔ Swagger sync
+
+When you **add, change or remove** API routes or response shapes:
+
+1. **Update** `public/docs/debug-api.yaml` in the same change:
+   - New/modified/removed **paths** under `paths:` (e.g. `/api/stats`, `/api/bug/memory-leak`).
+   - New/modified/removed **schemas** under `components/schemas/` (e.g. `StatsResponse`, `MemoryLeakResponse`).
+   - Keep descriptions and examples aligned with the actual controllers.
+
+2. **Reference**: the source of truth for behaviour is the code in `src/controllers/` and `src/app.js`; the YAML is the documentation that must stay in sync.
+
+3. **Checklist** when touching the API:
+   - [ ] New route → add path + response schema in `debug-api.yaml`.
+   - [ ] Changed response fields → update the corresponding schema and path description.
+   - [ ] Removed route or field → remove from `debug-api.yaml`.
+
+Do this **systematically** so the Swagger doc is always up to date after API changes.
