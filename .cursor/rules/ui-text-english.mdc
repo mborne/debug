@@ -1,0 +1,16 @@
+---
+description: User-facing text must be in English
+globs: public/**/*.html,public/**/*.js,public/**/*.ts,public/**/*.tsx,public/**/*.vue
+alwaysApply: false
+---
+
+# UI text in English
+
+All user-facing text in this project must be in **English**.
+
+- **Labels, buttons, titles, descriptions**: use English (e.g. "Last updated", "API available", "Sending…").
+- **Error and status messages**: use English (e.g. "Network error", "Offline", "Metadata unavailable").
+- **HTML**: set `lang="en"` on the root element; use English in `title`, `meta description`, and visible content.
+- **Comments in UI/frontend code** may stay in any language; this rule targets text shown to end users.
+
+When adding or changing copy in `public/` (HTML, JS, etc.), write it in English so the principle is not forgotten.

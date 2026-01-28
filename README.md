@@ -1,6 +1,6 @@
 # mborne/debug
 
-A buggy API to illustrate Docker and Kubernetes features :
+A buggy application to illustrate Docker and Kubernetes features (mainly auto-restart and limits) :
 
 ![docs/screenshot.png](docs/screenshot.png)
 
