@@ -53,7 +53,8 @@
       metaColor.style.border = '';
     }
     metaAge.textContent = formatAge(data.started_at);
-    metaMemory.textContent = data.memory && data.memory.heapUsed != null ? formatBytes(data.memory.heapUsed) : '—';
+    const memBytes = data.memory?.container ?? data.memory?.rss;
+    metaMemory.textContent = memBytes != null ? formatBytes(memBytes) : '—';
     metaLeakCount.textContent = data.leaked_buffers_count != null ? String(data.leaked_buffers_count) : '—';
     if (data.stress_cpu === true) {
       metaStressCpu.textContent = 'ON';

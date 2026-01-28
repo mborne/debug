@@ -54,7 +54,7 @@ paths:
       tags:
         - helpers
       summary: Provides process stats
-      description: Provides started_at, memory (process stats), leaked_buffers_count and stress_cpu.
+      description: Provides started_at, memory (process stats and cgroup when in container), leaked_buffers_count and stress_cpu.
       operationId: stats
       responses:
         '200':
@@ -191,6 +191,9 @@ components:
             heapUsed:
               type: integer
               description: Heap used (bytes)
+            container:
+              type: integer
+              description: Container memory from cgroup (bytes), same as docker stats; only present when running in a container
         leaked_buffers_count:
           type: integer
           description: Number of buffers kept in memory by the memory-leak endpoint
