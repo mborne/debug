@@ -1,24 +1,82 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="SwaggerUI" />
-  <title>SwaggerUI</title>
-  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css" />
+  <meta name="description" content="Debug API — Metadata and actions" />
+  <title>Debug API</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css" />
 </head>
-
 <body>
-  <div id="swagger-ui"></div>
-  <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js" crossorigin></script>
-  <script>
-    window.onload = () => {
-      window.ui = SwaggerUIBundle({
-        url: 'debug-api.yaml',
-        dom_id: '#swagger-ui',
-      });
-    };
-  </script>
-</body>
+  <section class="section">
+    <div class="container is-max-desktop">
+      <header class="block pb-5 mb-5">
+        <h1 class="title is-4 mb-1">Debug</h1>
+        <p class="subtitle is-6 has-text-grey mb-2">Use this interface to test container behavior: memory leaks, crash and restart, limit testing.</p>
+        <p class="is-size-7">
+          <a href="docs/">API</a>
+          <span class="mx-2">·</span>
+          <a href="https://github.com/mborne/debug" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </p>
+      </header>
 
+      <section class="block">
+        <h2 class="heading is-size-7 has-text-grey has-text-weight-semibold is-uppercase mb-3">Identity (auto-refresh)</h2>
+        <div class="box" id="meta-grid">
+          <div class="columns is-multiline is-mobile">
+            <div class="column is-half-mobile is-one-quarter-tablet">
+              <p class="heading is-size-7 has-text-grey mb-1">Hostname</p>
+              <p class="is-size-6" id="meta-hostname"><span class="has-text-grey-light">—</span></p>
+            </div>
+            <div class="column is-half-mobile is-one-quarter-tablet">
+              <p class="heading is-size-7 has-text-grey mb-1">Version</p>
+              <p class="is-size-6" id="meta-version"><span class="has-text-grey-light">—</span></p>
+            </div>
+            <div class="column is-half-mobile is-one-quarter-tablet">
+              <p class="heading is-size-7 has-text-grey mb-1">Arch</p>
+              <p class="is-size-6" id="meta-arch"><span class="has-text-grey-light">—</span></p>
+            </div>
+            <div class="column is-half-mobile is-one-quarter-tablet">
+              <p class="heading is-size-7 has-text-grey mb-1">Color</p>
+              <p class="is-size-6"><span class="tag has-text-grey-light" id="meta-color">—</span></p>
+            </div>
+          </div>
+        </div>
+        <p class="is-size-7 has-text-grey" id="meta-updated">Last updated: —</p>
+      </section>
+
+      <div class="block mb-5 level is-mobile">
+        <div class="level-left">
+          <span class="tag is-rounded is-light mr-2" id="status-dot" aria-hidden="true"></span>
+          <span class="is-size-7 has-text-grey" id="status-text">Checking…</span>
+        </div>
+      </div>
+
+      <section class="block">
+        <h2 class="heading is-size-7 has-text-grey has-text-weight-semibold is-uppercase mb-3">Actions</h2>
+        <div class="block mb-4">
+          <button type="button" class="button is-warning is-light is-small" data-action="memoryLeak">Memory leak</button>
+          <p class="is-size-7 has-text-grey mt-1 mb-0">Kill and restart when memory limit is reached.</p>
+        </div>
+        <div class="block mb-4">
+          <button type="button" class="button is-danger is-light is-small" data-action="crash">Crash</button>
+          <p class="is-size-7 has-text-grey mt-1 mb-0">Automatic restart.</p>
+        </div>
+        <div class="block mb-4">
+          <button type="button" class="button is-warning is-light is-small" data-action="stressCpu">Stress CPU</button>
+          <p class="is-size-7 has-text-grey mt-1 mb-0">Throttling when CPU limit is reached.</p>
+        </div>
+        <div class="block mb-4">
+          <button type="button" class="button is-warning is-light is-small" data-action="stressMemory">Stress memory</button>
+          <p class="is-size-7 has-text-grey mt-1 mb-0">Kill when memory limit is reached.</p>
+        </div>
+        <div class="notification is-hidden mt-3" id="action-feedback"></div>
+      </section>
+
+      <p class="is-size-7 has-text-grey-light mt-5">This front was developed with <a href="https://cursor.com" target="_blank" rel="noopener noreferrer">Cursor</a>.</p>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
 </html>
