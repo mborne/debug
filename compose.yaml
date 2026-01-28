@@ -1,5 +1,6 @@
 services:
   debug:
+    container_name: debug
     image: ghcr.io/mborne/debug:master
     build:
       context: .

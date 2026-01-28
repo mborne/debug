@@ -1,4 +1,4 @@
-FROM node:20-alpine AS builder
+FROM node:24-alpine
 
 RUN apk add --no-cache stress-ng
 
