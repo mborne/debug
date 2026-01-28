@@ -21,6 +21,13 @@
       </header>
 
       <section class="block">
+        <h2 class="heading is-size-7 has-text-grey has-text-weight-semibold is-uppercase mb-3">Status</h2>
+        <div class="box">
+          <p class="is-size-6 has-text-weight-semibold" id="meta-status"><span class="has-text-grey-light">—</span></p>
+        </div>
+      </section>
+
+      <section class="block">
         <h2 class="heading is-size-7 has-text-grey has-text-weight-semibold is-uppercase mb-3">Process (auto-refresh)</h2>
         <div class="box" id="meta-grid">
           <div class="columns is-multiline is-mobile">
@@ -53,8 +60,8 @@
               <p class="is-size-6" id="meta-leak-count"><span class="has-text-grey-light">—</span></p>
             </div>
             <div class="column is-half-mobile is-one-quarter-tablet">
-              <p class="heading is-size-7 has-text-grey mb-1">Status</p>
-              <p class="is-size-6 has-text-weight-semibold" id="meta-status"><span class="has-text-grey-light">—</span></p>
+              <p class="heading is-size-7 has-text-grey mb-1">Stress CPU</p>
+              <p class="is-size-6" id="meta-stress-cpu"><span class="has-text-grey-light">—</span></p>
             </div>
           </div>
         </div>
@@ -62,23 +69,25 @@
 
       <section class="block">
         <h2 class="heading is-size-7 has-text-grey has-text-weight-semibold is-uppercase mb-3">Actions</h2>
-        <div class="block mb-4">
-          <button type="button" class="button is-warning is-light is-small" data-action="memoryLeak">Memory leak</button>
-          <p class="is-size-7 has-text-grey mt-1 mb-0">Kill and restart when memory limit is reached.</p>
+        <div class="box">
+          <div class="block mb-4">
+            <button type="button" class="button is-danger is-light is-small" data-action="crash">Crash</button>
+            <p class="is-size-7 has-text-grey mt-1 mb-0">Kill process to illustrate auto-restart within Docker or Kubernetes.</p>
+          </div>
+          <div class="block mb-4">
+            <button type="button" class="button is-warning is-light is-small" data-action="memoryLeak">Memory leak</button>
+            <p class="is-size-7 has-text-grey mt-1 mb-0">Add buffers to memory to illustrate memory limit within Docker or Kubernetes.</p>
+          </div>
+          <div class="block mb-4">
+            <button type="button" class="button is-warning is-light is-small" data-action="stressCpu">Stress CPU</button>
+            <p class="is-size-7 has-text-grey mt-1 mb-0">Run CPU stress test to illustrate CPU limit within Docker or Kubernetes (use docker stats to see the CPU usage).</p>
+          </div>
+          <div class="block mb-4">
+            <button type="button" class="button is-warning is-light is-small" data-action="stressMemory">Stress memory</button>
+            <p class="is-size-7 has-text-grey mt-1 mb-0">Kill when memory limit is reached.</p>
+          </div>
+          <div class="notification is-hidden mt-3" id="action-feedback"></div>
         </div>
-        <div class="block mb-4">
-          <button type="button" class="button is-danger is-light is-small" data-action="crash">Crash</button>
-          <p class="is-size-7 has-text-grey mt-1 mb-0">Automatic restart.</p>
-        </div>
-        <div class="block mb-4">
-          <button type="button" class="button is-warning is-light is-small" data-action="stressCpu">Stress CPU</button>
-          <p class="is-size-7 has-text-grey mt-1 mb-0">Throttling when CPU limit is reached.</p>
-        </div>
-        <div class="block mb-4">
-          <button type="button" class="button is-warning is-light is-small" data-action="stressMemory">Stress memory</button>
-          <p class="is-size-7 has-text-grey mt-1 mb-0">Kill when memory limit is reached.</p>
-        </div>
-        <div class="notification is-hidden mt-3" id="action-feedback"></div>
       </section>
 
       <p class="is-size-7 has-text-grey-light mt-5">This front was developed with <a href="https://cursor.com" target="_blank" rel="noopener noreferrer">Cursor</a>.</p>

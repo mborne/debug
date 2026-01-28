@@ -9,6 +9,7 @@
   const metaAge = document.getElementById('meta-age');
   const metaMemory = document.getElementById('meta-memory');
   const metaLeakCount = document.getElementById('meta-leak-count');
+  const metaStressCpu = document.getElementById('meta-stress-cpu');
   const metaStatus = document.getElementById('meta-status');
   const actionFeedback = document.getElementById('action-feedback');
 
@@ -54,6 +55,16 @@
     metaAge.textContent = formatAge(data.started_at);
     metaMemory.textContent = data.memory && data.memory.heapUsed != null ? formatBytes(data.memory.heapUsed) : '—';
     metaLeakCount.textContent = data.leaked_buffers_count != null ? String(data.leaked_buffers_count) : '—';
+    if (data.stress_cpu === true) {
+      metaStressCpu.textContent = 'ON';
+      metaStressCpu.className = 'is-size-6 has-text-warning';
+    } else if (data.stress_cpu === false) {
+      metaStressCpu.textContent = 'OFF';
+      metaStressCpu.className = 'is-size-6 has-text-success';
+    } else {
+      metaStressCpu.textContent = '—';
+      metaStressCpu.className = 'is-size-6 has-text-grey-light';
+    }
   }
 
   function fetchProcess() {
@@ -70,6 +81,8 @@
       metaAge.textContent = '—';
       metaMemory.textContent = '—';
       metaLeakCount.textContent = '—';
+      metaStressCpu.textContent = '—';
+      metaStressCpu.className = 'is-size-6 has-text-grey-light';
     });
   }
 
@@ -139,5 +152,5 @@
   checkHealth();
   fetchProcess();
   setInterval(fetchProcess, META_INTERVAL_MS);
-  setInterval(checkHealth, 10000);
+  setInterval(checkHealth, 1000);
 })();

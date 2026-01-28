@@ -54,7 +54,7 @@ paths:
       tags:
         - helpers
       summary: Provides process stats
-      description: Provides started_at, memory (process stats) and leaked_buffers_count.
+      description: Provides started_at, memory (process stats), leaked_buffers_count and stress_cpu.
       operationId: stats
       responses:
         '200':
@@ -215,3 +215,6 @@ components:
         leaked_buffers_count:
           type: integer
           description: Number of buffers kept in memory by the memory-leak endpoint
+        stress_cpu:
+          type: boolean
+          description: True while CPU stress test (stress-ng) is running, false otherwise
