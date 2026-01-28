@@ -28,7 +28,4 @@ app.post('/api/bug/memory-leak', memoryLeak);
 import cpu from './controllers/stress/cpu.js';
 app.post('/api/stress/cpu', cpu);
 
-import memory from './controllers/stress/memory.js';
-app.post('/api/stress/memory', memory);
-
 export default app;

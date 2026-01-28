@@ -120,7 +120,6 @@
     if (action === 'memoryLeak') path = '/api/bug/memory-leak';
     else if (action === 'crash') path = '/api/bug/crash';
     else if (action === 'stressCpu') path = '/api/stress/cpu';
-    else if (action === 'stressMemory') path = '/api/stress/memory';
     else return;
 
     btn.disabled = true;

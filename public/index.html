@@ -28,7 +28,7 @@
       </section>
 
       <section class="block">
-        <h2 class="heading is-size-7 has-text-grey has-text-weight-semibold is-uppercase mb-3">Process (auto-refresh)</h2>
+        <h2 class="heading is-size-7 has-text-grey has-text-weight-semibold is-uppercase mb-3">Metadata</h2>
         <div class="box" id="meta-grid">
           <div class="columns is-multiline is-mobile">
             <div class="column is-half-mobile is-one-quarter-tablet">
@@ -47,6 +47,13 @@
               <p class="heading is-size-7 has-text-grey mb-1">Color</p>
               <p class="is-size-6"><span class="tag has-text-grey-light" id="meta-color">—</span></p>
             </div>
+          </div>
+        </div>
+      </section>            
+      <section class="block">
+        <h2 class="heading is-size-7 has-text-grey has-text-weight-semibold is-uppercase mb-3">Stats</h2>
+        <div class="box" id="meta-grid">
+          <div class="columns is-multiline is-mobile">
             <div class="column is-half-mobile is-one-quarter-tablet">
               <p class="heading is-size-7 has-text-grey mb-1">Age</p>
               <p class="is-size-6" id="meta-age"><span class="has-text-grey-light">—</span></p>
@@ -81,10 +88,6 @@
           <div class="block mb-4">
             <button type="button" class="button is-warning is-light is-small" data-action="stressCpu">Stress CPU</button>
             <p class="is-size-7 has-text-grey mt-1 mb-0">Run CPU stress test to illustrate CPU limit within Docker or Kubernetes (use docker stats to see the CPU usage).</p>
-          </div>
-          <div class="block mb-4">
-            <button type="button" class="button is-warning is-light is-small" data-action="stressMemory">Stress memory</button>
-            <p class="is-size-7 has-text-grey mt-1 mb-0">Kill when memory limit is reached.</p>
           </div>
           <div class="notification is-hidden mt-3" id="action-feedback"></div>
         </div>
