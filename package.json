@@ -1,9 +1,11 @@
 {
   "name": "@mborne/debug",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A buggy API to illustrate Docker and Kubernetes features",
   "type": "module",
   "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "repository": {
     "type": "git",
@@ -23,9 +25,11 @@
   },
   "homepage": "https://github.com/mborne/debug#readme",
   "dependencies": {
-    "express": "^4.18.2",
-    "winston": "^3.11.0"
+    "express": "^5.2.1",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
+    "supertest": "^7.2.2",
+    "vitest": "^4.0.18"
   }
 }
